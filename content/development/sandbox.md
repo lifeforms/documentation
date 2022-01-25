@@ -40,6 +40,25 @@ You can send anything you want at the sandbox, for instance, you can send HTTP h
 
 The sandbox will return a 200 response code, no matter if an attack was detected or not.
 
+The sandbox will also return a `X-Unique-Id` response header. This contains a unique value that you can use to refer to your request when communicating with us. With `curl -i` you can see the returned headers.
+
+### Example showing returned headers
+
+```bash
+curl -i -H 'x-format-output: txt-matched-rules' 'https://sandbox.coreruleset.org/?test=posix_uname()'
+HTTP/1.1 200 OK
+Date: Tue, 25 Jan 2022 13:53:07 GMT
+Content-Type: text/plain
+Transfer-Encoding: chunked
+Connection: keep-alive
+X-Unique-ID: YfAAw3Gq8uf24wZCMjHTcAAAANE
+x-backend: apache-3.3.2
+
+933150 PL1 PHP Injection Attack: High-Risk PHP Function Name Found
+949110 PL1 Inbound Anomaly Score Exceeded (Total Score: 5)
+980130 PL1 Inbound Anomaly Score Exceeded (Total Inbound Score: 5 - SQLI=0,XSS=0,RFI=0,LFI=0,RCE=0,PHPI=5,HTTP=0,SESS=0): individual paranoia level scores: 5, 0, 0, 0
+```
+
 ## Default options
 
 It’s useful to know that you can tweak the sandbox in various ways. If you don’t send any `X-` headers, the sandbox will use the following defaults.
